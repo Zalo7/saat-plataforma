@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panel SAAT</title>
+<link rel="icon" href="/img/marca-saat.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/saat.css">
+<link rel="stylesheet" href="/panel/panel.css">
+<script src="/vendor/chart.umd.js"></script>
+</head>
+<body>
+<div id="login" class="login-wrap hide">
+  <form class="card" id="login-f">
+    <img src="/img/logo-saat.png" alt="SAAT" style="height:54px;margin:0 auto 18px">
+    <h2 style="text-align:center;font-size:20px">Panel del estudio</h2>
+    <div class="field"><label for="l-email">Email</label><input type="email" id="l-email" required autocomplete="username"></div>
+    <div class="field"><label for="l-pass">Contraseña</label><input type="password" id="l-pass" required autocomplete="current-password"></div>
+    <div id="l-err" class="alert alert-bad hide"></div>
+    <button class="btn btn-dark" style="width:100%">Ingresar</button>
+  </form>
+</div>
+
+<div id="app" class="hide">
+  <aside class="side">
+    <div class="brand"><img src="/img/logo-saat-blanco.png" alt="SAAT"></div>
+    <nav id="menu">
+      <a data-v="tablero" href="#tablero"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3zm10 8h8V11h-8zM3 21h8v-6H3zm10-18v6h8V3z"/></svg>Tablero</a>
+      <a data-v="casos" href="#casos"><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4zm0 6h16v10H4z"/></svg>Casos</a>
+      <a data-v="mensajes" href="#mensajes"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3z"/></svg>Mensajes <b class="badge hide" id="b-msg"></b></a>
+      <a data-v="finanzas" href="#finanzas"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16V9m6 7V5m6 11v-4"/></svg>Ingresos y gastos</a>
+      <a data-v="aseguradoras" href="#aseguradoras"><svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>Aseguradoras</a>
+      <a data-v="config" href="#config"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.6-2-3.4-2.4 1a7 7 0 00-2-1.2L14 3h-4l-.5 2.6a7 7 0 00-2 1.2l-2.4-1-2 3.4 2 1.6a7 7 0 000 2.4l-2 1.6 2 3.4 2.4-1a7 7 0 002 1.2L10 21h4l.5-2.6a7 7 0 002-1.2l2.4 1 2-3.4-2-1.6c.1-.4.1-.8.1-1.2z"/></svg>Configuración</a>
+    </nav>
+    <div class="side-foot">
+      <a href="/" target="_blank">Ver sitio público ↗</a>
+      <div id="me" class="muted"></div>
+      <button class="btn btn-sm" id="logout">Salir</button>
+    </div>
+  </aside>
+  <main class="main" id="main"></main>
+</div>
+<div class="toast hide" id="toast"></div>
+<script src="/panel/panel.js"></script>
+</body>
+</html>

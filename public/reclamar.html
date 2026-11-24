@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Iniciar reclamo — SAAT</title>
+<meta name="description" content="Cargá tu reclamo por accidente de tránsito desde el celular: datos, documentos y firma online. Sin pagar nada por adelantado.">
+<link rel="canonical" href="https://saat.com.ar/reclamar.html">
+<meta name="theme-color" content="#0B2340">
+<meta property="og:title" content="Iniciá tu reclamo por accidente de tránsito — SAAT">
+<meta property="og:image" content="https://saat.com.ar/img/og-saat.jpg">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/img/favicon-180.png">
+<link rel="stylesheet" href="/css/saat.css?v=20261124b">
+<style>
+.shell{max-width:760px;margin:0 auto;padding:28px 18px 80px}
+.prog{display:flex;gap:6px;margin:6px 0 10px}
+.prog i{flex:1;height:6px;border-radius:9px;background:var(--line);transition:background .3s}
+.prog i.on{background:var(--blue)}
+.stepname{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+.step{padding:28px}
+.step h2{font-size:26px;margin-bottom:6px}
+.step>p.muted{margin-top:0;margin-bottom:22px}
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+.nav .btn{min-width:140px}
+.sub{font-weight:700;font-family:var(--display);color:var(--navy-900);font-size:16px;margin:26px 0 12px;padding-top:18px;border-top:1px solid var(--line)}
+.err{color:var(--bad);font-size:13px;margin-top:4px}
+.invalid{border-color:var(--bad)!important}
+.docs{display:grid;gap:12px}
+.doc{display:flex;gap:14px;align-items:center;padding:14px;border:1.5px dashed #c9d5e3;border-radius:var(--r-sm);background:#fbfcfe}
+.doc.has{border-style:solid;border-color:#bfe6d1;background:var(--ok-50)}
+.doc .t{flex:1;min-width:0}
+.doc .t b{display:block;font-size:14.5px}
+.doc .t small{color:var(--muted)}
+.doc .thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.doc .thumbs span{position:relative;width:46px;height:46px;border-radius:8px;overflow:hidden;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--navy)}
+.doc .thumbs img{width:100%;height:100%;object-fit:cover}
+.doc .thumbs button{position:absolute;top:-2px;right:-2px;width:18px;height:18px;border-radius:50%;border:0;background:var(--bad);color:#fff;font-size:11px;line-height:18px;cursor:pointer;padding:0}
+.doc input[type=file]{display:none}
+.req{color:var(--bad);font-weight:700}
+.conv{max-height:340px;overflow:auto;border:1px solid var(--line);border-radius:var(--r-sm);padding:18px 20px;background:#fbfcfe;font-size:14px}
+.conv h4{font-size:14.5px;text-align:center}
+.conv p{margin:0 0 10px;text-align:justify}
+.sig-wrap{border:1.5px solid var(--line);border-radius:var(--r-sm);background:#fff;position:relative;touch-action:none}
+.sig-wrap canvas{width:100%;height:190px;display:block;cursor:crosshair}
+.sig-wrap .ph{position:absolute;inset:auto 0 18px 0;text-align:center;color:#a8b5c5;font-size:14px;pointer-events:none;border-top:1px dashed #c9d5e3;margin:0 24px;padding-top:6px}
+.chk{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:14.5px;margin:12px 0;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:1px;flex:none;accent-color:var(--blue)}
+.done{text-align:center;padding:40px 28px}
+.done .ok{width:72px;height:72px;border-radius:50%;background:var(--ok-50);display:grid;place-items:center;margin:0 auto 18px}
+.done .ok svg{width:36px;height:36px;stroke:var(--ok);fill:none;stroke-width:3}
+.code{font:800 26px var(--display);letter-spacing:.04em;color:var(--navy-900);background:var(--blue-50);display:inline-block;padding:10px 18px;border-radius:12px;margin:8px 0 18px}
+.sending{position:fixed;inset:0;background:rgba(255,255,255,.85);display:grid;place-items:center;z-index:99;font-weight:600}
+.spin{width:42px;height:42px;border-radius:50%;border:4px solid var(--blue-50);border-top-color:var(--blue);animation:s 1s linear infinite;margin:0 auto 14px}
+@keyframes s{to{transform:rotate(360deg)}}
+.mt8{margin-top:8px}
+/* progreso */
+#progress{margin-bottom:14px}
+.stepname{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;text-transform:none;letter-spacing:0}
+.stepname span{text-transform:uppercase;letter-spacing:.04em}
+.stepname b{font:800 18px var(--display);color:var(--navy-900);letter-spacing:-.01em}
+.stepname span{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap}
+.guardado{display:flex;gap:8px;align-items:flex-start;font-size:13px;color:var(--muted);margin:10px 0 0}
+.guardado svg{flex:none;width:16px;height:16px;stroke:var(--ok);fill:none;stroke-width:2.5;margin-top:2px}
+.step h2{font-size:clamp(23px,3vw,28px)}
+.choice span{min-height:52px}
+.firma{margin-top:18px}
+.firma-acc{text-align:right;margin-top:6px}
+/* pantalla final */
+.done h2{font-size:clamp(26px,3.4vw,32px)}
+.done-acc{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.ahora{text-align:left;max-width:520px;margin:28px auto 0;padding-top:22px;border-top:1px solid var(--line)}
+.ahora h3{font:700 16px var(--font);margin:0 0 12px}
+.ahora ol{margin:0;padding:0;list-style:none;counter-reset:a}
+.ahora li{position:relative;padding:0 0 14px 40px;color:var(--ink,#0F1B2A);font-size:15px}
+.ahora li:before{counter-increment:a;content:counter(a);position:absolute;left:0;top:-2px;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font:700 14px/28px var(--display);text-align:center}
+@media(max-width:640px){
+  .shell{padding:18px 14px 40px}
+  .step{padding:22px 18px}
+  .stepname b{font-size:16.5px}
+  /* botones Atrás / Siguiente fijos abajo mientras se completa el paso */
+  .step .nav{position:sticky;bottom:0;z-index:5;background:#fff;margin:22px -18px -22px;padding:12px 18px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);border-radius:0 0 var(--r) var(--r);box-shadow:0 -8px 18px rgba(15,27,42,.06)}
+  .step .nav .btn{min-width:0;flex:1;min-height:50px}
+  .step .nav .btn-ghost{flex:0 0 auto;padding:0 16px}
+  .step .nav span:empty{display:none}
+  .done-acc .btn{flex:1 1 100%}
+}
+</style>
+</head>
+<body class="flujo">
+<header class="top"><div class="wrap">
+  <a class="logo" href="/" aria-label="SAAT inicio"><picture><source srcset="/img/logo-saat.webp" type="image/webp"><img src="/img/logo-saat.png" alt="SAAT" width="78" height="40"></picture></a>
+  <nav><a class="lnk" href="/seguimiento.html">Seguí tu caso</a><a class="btn btn-wa btn-sm wa-link" href="https://wa.me/5493624856192?text=Hola%2C%20quiero%20consultar%20por%20un%20accidente%20de%20tr%C3%A1nsito." target="_blank" rel="noopener">WhatsApp</a></nav>
+</div></header>
+
+<main class="shell">
+  <div id="progress">
+    <div class="stepname" id="stepname"></div>
+    <div class="prog" id="prog" aria-hidden="true"></div>
+    <p class="guardado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>Tus respuestas se guardan en este celular. Si se corta, seguís donde quedaste (los archivos hay que volver a subirlos).</p>
+  </div>
+  <form id="f" class="card" novalidate autocomplete="on">
+
+    <!-- 0. ¿Califica? -->
+    <section class="step" data-name="¿Tu caso califica?">
+      <h2>Primero, veamos si tu caso califica</h2>
+      <p class="muted">Son 4 preguntas. Si califica, seguís con el reclamo.</p>
+      <div class="field"><label for="fecha_accidente">¿Cuándo fue el accidente? <span class="req">*</span></label><input type="date" id="fecha_accidente" name="fecha_accidente" required></div>
+      <div class="field"><label>¿El vehículo que te chocó tiene seguro? <span class="req">*</span></label>
+        <div class="choices" data-req="tercero_tiene_seguro">
+          <label class="choice"><input type="radio" name="tercero_tiene_seguro" value="si"><span>Sí</span></label>
+          <label class="choice"><input type="radio" name="tercero_tiene_seguro" value="no_se"><span>No sé</span></label>
+          <label class="choice"><input type="radio" name="tercero_tiene_seguro" value="no"><span>No tiene</span></label>
+        </div></div>
+      <div class="field" id="f-aseg"><label for="aseguradora_id">¿Qué compañía de seguros tiene?</label>
+        <select id="aseguradora_id" name="aseguradora_id"><option value="">No lo sé todavía</option></select>
+        <input type="text" id="aseguradora_texto" name="aseguradora_texto" placeholder="Escribí el nombre de la compañía" class="hide mt8">
+      </div>
+      <div class="field"><label>¿Quién tuvo la culpa del accidente? <span class="req">*</span></label>
+        <div class="choices" data-req="culpa">
+          <label class="choice"><input type="radio" name="culpa" value="tercero"><span>El otro</span></label>
+          <label class="choice"><input type="radio" name="culpa" value="compartida"><span>Los dos</span></label>
+          <label class="choice"><input type="radio" name="culpa" value="no_se"><span>No sé</span></label>
+          <label class="choice"><input type="radio" name="culpa" value="yo"><span>Yo</span></label>
+        </div>
+        <div class="hint">Si eras acompañante o peatón, elegí "El otro".</div></div>
+      <div id="bloqueo" class="alert alert-bad hide"></div>
+      <div class="nav"><span></span><button type="button" class="btn btn-primary" data-next>Verificar y seguir →</button></div>
+    </section>
+
+    <!-- 1. Tus datos -->
+    <section class="step hide" data-name="Tus datos">
+      <h2>Tus datos</h2>
+      <p class="muted">Los usamos para el reclamo y para contactarte.</p>
+      <div class="grid2">
+        <div class="field"><label for="nombre">Nombre <span class="req">*</span></label><input type="text" id="nombre" name="nombre" required autocomplete="given-name"></div>
+        <div class="field"><label for="apellido">Apellido <span class="req">*</span></label><input type="text" id="apellido" name="apellido" required autocomplete="family-name"></div>
+        <div class="field"><label for="dni">DNI <span class="req">*</span></label><input type="text" id="dni" name="dni" inputmode="numeric" required placeholder="Sin puntos"></div>
+        <div class="field"><label for="fecha_nac">Fecha de nacimiento</label><input type="date" id="fecha_nac" name="fecha_nac"></div>
+        <div class="field"><label for="telefono">Celular / WhatsApp <span class="req">*</span></label><input type="tel" id="telefono" name="telefono" required autocomplete="tel" placeholder="362 4 123456"></div>
+        <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email"></div>
+      </div>
+      <div class="field"><label for="domicilio">Domicilio</label><input type="text" id="domicilio" name="domicilio" autocomplete="street-address"></div>
+      <div class="grid2">
+        <div class="field"><label for="localidad">Localidad</label><input type="text" id="localidad" name="localidad" list="localidades"></div>
+        <div class="field"><label for="provincia">Provincia</label><select id="provincia" name="provincia" class="prov"></select></div>
+        <div class="field"><label for="ocupacion">¿A qué te dedicás?</label><input type="text" id="ocupacion" name="ocupacion" placeholder="Ej.: empleado de comercio"></div>
+        <div class="field"><label for="ingresos_registrados">Tus ingresos son…</label>
+          <select id="ingresos_registrados" name="ingresos_registrados"><option value="">Elegí</option><option value="relacion_dependencia">En relación de dependencia (recibo de sueldo)</option><option value="monotributo">Monotributo / autónomo</option><option value="informal">Trabajo informal</option><option value="sin_ingresos">Sin ingresos / estudiante / jubilado</option></select></div>
+      </div>
+      <div class="nav"><button type="button" class="btn btn-ghost" data-prev>← Atrás</button><button type="button" class="btn btn-primary" data-next>Siguiente →</button></div>
+    </section>
+
+    <!-- 2. El accidente -->
+    <section class="step hide" data-name="El accidente">
+      <h2>¿Qué pasó?</h2>
+      <p class="muted">Contanos con tus palabras. Mientras más detalle, mejor.</p>
+      <div class="grid2">
+        <div class="field"><label for="hora_accidente">Hora aproximada</label><input type="time" id="hora_accidente" name="hora_accidente"></div>
+        <div class="field"><label for="localidad_acc">Localidad <span class="req">*</span></label><input type="text" id="localidad_acc" name="localidad_acc" list="localidades" required></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label for="lugar">Lugar (calles, ruta, km) <span class="req">*</span></label><input type="text" id="lugar" name="lugar" required placeholder="Ej.: Av. Sarmiento y Belgrano"></div>
+        <div class="field"><label for="provincia_acc">Provincia</label><select id="provincia_acc" name="provincia_acc" class="prov"></select></div>
+      </div>
+      <div class="field"><label>Vos ibas como… <span class="req">*</span></label>
+        <div class="choices" data-req="rol">
+          <label class="choice"><input type="radio" name="rol" value="conductor_moto"><span>🏍️ Conductor de moto</span></label>
+          <label class="choice"><input type="radio" name="rol" value="conductor_auto"><span>🚗 Conductor de auto</span></label>
+          <label class="choice"><input type="radio" name="rol" value="acompanante"><span>👥 Acompañante</span></label>
+          <label class="choice"><input type="radio" name="rol" value="peaton"><span>🚶 Peatón</span></label>
+          <label class="choice"><input type="radio" name="rol" value="ciclista"><span>🚲 Ciclista</span></label>
+        </div></div>
+      <div class="grid2" id="f-veh">
+        <div class="field"><label for="vehiculo_cliente">Tu vehículo (marca y modelo)</label><input type="text" id="vehiculo_cliente" name="vehiculo_cliente" placeholder="Ej.: Honda Wave 110"></div>
+        <div class="field"><label for="patente_cliente">Patente de tu vehículo</label><input type="text" id="patente_cliente" name="patente_cliente" style="text-transform:uppercase"></div>
+      </div>
+      <div class="field"><label for="tipo_siniestro">Tipo de accidente</label>
+        <select id="tipo_siniestro" name="tipo_siniestro"><option value="">Elegí</option><option>Me chocaron de atrás</option><option>Choque en una esquina / cruce</option><option>Choque lateral / al girar</option><option>Choque de frente</option><option>Me atropellaron</option><option>Puerta abierta / maniobra de estacionamiento</option><option>Otro</option></select></div>
+      <div class="field"><label for="descripcion">Contanos cómo fue <span class="req">*</span></label><textarea id="descripcion" name="descripcion" required placeholder="Ej.: Iba por Av. 25 de Mayo hacia el centro, con luz verde, y un auto que venía por la calle transversal no frenó y me chocó del lado izquierdo…"></textarea></div>
+
+      <div class="sub">Lesiones</div>
+      <div class="field"><label>¿Tuviste lesiones? <span class="req">*</span></label>
+        <div class="choices" data-req="hubo_lesiones">
+          <label class="choice"><input type="radio" name="hubo_lesiones" value="1"><span>Sí</span></label>
+          <label class="choice"><input type="radio" name="hubo_lesiones" value="0"><span>No</span></label>
+        </div></div>
+      <div id="f-les" class="hide">
+        <div class="field"><label for="lesiones_desc">¿Qué lesiones tuviste?</label><textarea id="lesiones_desc" name="lesiones_desc" placeholder="Ej.: fractura de muñeca derecha, golpe en la rodilla, me enyesaron 40 días…"></textarea></div>
+        <div class="field"><label for="atencion_medica">¿Dónde te atendieron?</label><input type="text" id="atencion_medica" name="atencion_medica" placeholder="Ej.: Hospital Perrando, guardia; luego kinesiología"></div>
+      </div>
+
+      <div class="sub">Daños materiales</div>
+      <div class="field"><label>¿Hubo daños en tu vehículo u otras cosas? <span class="req">*</span></label>
+        <div class="choices" data-req="dano_material">
+          <label class="choice"><input type="radio" name="dano_material" value="1"><span>Sí</span></label>
+          <label class="choice"><input type="radio" name="dano_material" value="0"><span>No</span></label>
+        </div></div>
+      <div class="field hide" id="f-dano"><label for="dano_desc">¿Qué se dañó?</label><textarea id="dano_desc" name="dano_desc" placeholder="Ej.: guardabarros, manubrio, casco, celular…"></textarea></div>
+      <div class="field"><label>¿Hiciste denuncia policial o exposición?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="denuncia_policial" value="si"><span>Sí</span></label>
+          <label class="choice"><input type="radio" name="denuncia_policial" value="no"><span>No</span></label>
+        </div></div>
+      <div class="nav"><button type="button" class="btn btn-ghost" data-prev>← Atrás</button><button type="button" class="btn btn-primary" data-next>Siguiente →</button></div>
+    </section>
+
+    <!-- 3. El otro vehículo -->
+    <section class="step hide" data-name="El otro vehículo">
+      <h2>El vehículo responsable</h2>
+      <p class="muted">Completá lo que sepas. La patente es lo más importante.</p>
+      <div class="grid2">
+        <div class="field"><label for="tercero_patente">Patente</label><input type="text" id="tercero_patente" name="tercero_patente" style="text-transform:uppercase" placeholder="Ej.: AB123CD"></div>
+        <div class="field"><label for="tercero_vehiculo">Vehículo (marca, modelo, color)</label><input type="text" id="tercero_vehiculo" name="tercero_vehiculo"></div>
+        <div class="field"><label for="tercero_nombre">Nombre del conductor o titular</label><input type="text" id="tercero_nombre" name="tercero_nombre"></div>
+        <div class="field"><label for="tercero_poliza">Nº de póliza (si lo tenés)</label><input type="text" id="tercero_poliza" name="tercero_poliza"></div>
+      </div>
+      <div class="nav"><button type="button" class="btn btn-ghost" data-prev>← Atrás</button><button type="button" class="btn btn-primary" data-next>Siguiente →</button></div>
+    </section>
+
+    <!-- 4. Documentos -->
+    <section class="step hide" data-name="Documentación">
+      <h2>Documentación</h2>
+      <p class="muted">Sacales una foto con el celular o subí el archivo (fotos o PDF). Sólo el DNI es obligatorio para empezar; el resto lo podés subir después desde "Seguí tu caso".</p>
+      <div class="docs" id="docs"></div>
+      <div class="nav"><button type="button" class="btn btn-ghost" data-prev>← Atrás</button><button type="button" class="btn btn-primary" data-next>Siguiente →</button></div>
+    </section>
+
+    <!-- 5. Convenio y firma -->
+    <section class="step hide" data-name="Convenio y firma">
+      <h2>Convenio y firma</h2>
+      <p class="muted">Leé el convenio que nos autoriza a reclamar por vos. No pagás nada por adelantado.</p>
+      <div class="conv" id="conv"></div>
+      <label class="chk"><input type="checkbox" id="acepta_convenio"> <span>Leí y acepto el convenio de honorarios y autorizo al Dr. Gerardo Martín Stancheff (SAAT) a representarme en el reclamo extrajudicial.</span></label>
+      <label class="chk"><input type="checkbox" id="acepta_datos"> <span>Doy mi consentimiento para el tratamiento de mis datos personales y de salud con la finalidad de gestionar el reclamo (Ley 25.326). <a href="/privacidad.html" target="_blank">Ver política</a></span></label>
+      <label class="chk"><input type="checkbox" id="declara"> <span>Declaro que los datos y documentos que aporto son verdaderos.</span></label>
+      <div class="field firma"><label>Firmá con el dedo o el mouse <span class="req">*</span></label>
+        <div class="sig-wrap"><canvas id="sig"></canvas><div class="ph">Firma de <span id="sig-name">EL CLIENTE</span></div></div>
+        <div class="firma-acc"><button type="button" class="btn btn-ghost btn-sm" id="sig-clear">Borrar firma</button></div></div>
+      <div class="sub">Una última pregunta</div>
+      <div class="grid2">
+        <div class="field"><label for="canal">¿Cómo nos conociste?</label>
+          <select id="canal" name="canal"><option value="">Elegí</option><option>Instagram</option><option>Facebook</option><option>TikTok</option><option>Google</option><option>Recomendación de un conocido</option><option>Fui cliente antes</option><option>Taller / clínica / derivación</option><option>Cartel / vía pública</option><option>Radio / TV</option><option>Otro</option></select></div>
+        <div class="field"><label for="referido_por">¿Quién te recomendó? (opcional)</label><input type="text" id="referido_por" name="referido_por"></div>
+      </div>
+      <div id="send-err" class="alert alert-bad hide"></div>
+      <div class="nav"><button type="button" class="btn btn-ghost" data-prev>← Atrás</button><button type="button" class="btn btn-primary" id="enviar">Firmar y enviar reclamo</button></div>
+    </section>
+
+    <!-- 6. Listo -->
+    <section class="step done hide" data-name="¡Listo!">
+      <div class="ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div>
+      <h2>¡Recibimos tu reclamo!</h2>
+      <p class="muted">Guardá este código: con él y tu DNI seguís tu caso.</p>
+      <div class="code" id="codigo"></div>
+      <div id="pend"></div>
+      <div class="done-acc">
+        <a class="btn btn-primary" id="ir-seg" href="/seguimiento.html">Ver mi caso</a>
+        <a class="btn btn-ghost" id="dl-conv" href="#" target="_blank">Descargar mi convenio (PDF)</a>
+        <a class="btn btn-wa" id="wa-done" href="#" target="_blank" rel="noopener">Avisar por WhatsApp</a>
+      </div>
+      <div class="ahora">
+        <h3>Qué pasa ahora</h3>
+        <ol>
+          <li><b>Un abogado revisa tu caso</b> y la documentación que subiste.</li>
+          <li><b>Te contactamos</b> por WhatsApp o por teléfono a la brevedad.</li>
+          <li><b>Seguís todo desde "Seguí tu caso"</b> con tu código y tu DNI: el estado, los mensajes y tu convenio.</li>
+        </ol>
+      </div>
+    </section>
+  </form>
+</main>
+<footer class="mini-pie">
+  <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>Dr. Gerardo Martín Stancheff · Mat. 5851 S.T.J.Ch. · Monteagudo 368, Resistencia</p>
+  <p>Tus datos se usan sólo para tu reclamo (Ley 25.326) · <a href="/privacidad.html">Privacidad</a></p>
+</footer>
+<datalist id="localidades">
+  <option>Resistencia</option><option>Barranqueras</option><option>Fontana</option><option>Puerto Vilelas</option><option>Presidencia Roque Sáenz Peña</option><option>Villa Ángela</option><option>Charata</option><option>General San Martín</option><option>Juan José Castelli</option><option>Quitilipi</option><option>Machagai</option><option>Las Breñas</option><option>Corrientes</option><option>Goya</option><option>Paso de los Libres</option><option>Santo Tomé</option><option>Formosa</option><option>Clorinda</option><option>Posadas</option><option>Oberá</option>
+</datalist>
+<div class="sending hide" id="sending"><div style="text-align:center"><div class="spin"></div>Enviando tu reclamo y los documentos…<br><small class="muted" id="sending-p"></small></div></div>
+
+<script src="/js/tracking.js?v=20261124b" defer></script>
+<script src="/js/convenio-texto.js"></script>
+<script src="/js/reclamar.js?v=20261124b"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "saat-plataforma",
+  "version": "1.0.0",
+  "description": "SAAT — plataforma de reclamos por accidentes de tránsito",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node --no-warnings src/server.js",
+    "demo": "node --no-warnings scripts/demo.js && DATA_DIR=./data-demo PORT=3001 node --no-warnings src/server.js",
+    "qa": "node tests/qa.js"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "compression": "^1.8.0",
+    "express": "^4.22.3",
+    "multer": "^2.4.0",
+    "pdfkit": "^0.20.2"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "private": true,
+  "devDependencies": {
+    "axe-core": "^4.10.2",
+    "playwright": "^1.49.1"
+  }
+}

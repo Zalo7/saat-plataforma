@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seguí tu caso — SAAT</title>
+<meta name="description" content="Ingresá con tu código y tu DNI para ver en qué etapa está tu reclamo, escribirle al estudio y descargar tu convenio.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0B2340">
+<link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/img/favicon-180.png">
+<link rel="stylesheet" href="/css/saat.css?v=20261124b">
+<style>
+.mayus{text-transform:uppercase}
+.m0{margin:0!important}
+.btn-full{width:100%}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.login h1{font-size:28px;margin-bottom:8px}
+.login-ayuda{font-size:14px;color:var(--muted);margin:16px 0 0}
+.v-codigo{font-size:13.5px;font-weight:600;color:var(--muted)}
+.estado-lbl{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.estado .big{margin:4px 0 2px}
+.box h3{font:700 17px var(--font);margin-bottom:12px}
+.msg-form{display:flex;gap:8px}
+.msg-form input{flex:1}
+.docs-box{margin-top:18px}
+.docs-l{font-size:14.5px;line-height:1.8;color:var(--ink)}
+.subir{margin-top:16px;align-items:end}
+.shell{max-width:860px;margin:0 auto;padding:28px 18px 80px}
+.login{max-width:440px;margin:30px auto;padding:30px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.head h1{font-size:28px;margin:0}
+.estado{padding:24px;margin-bottom:18px}
+.estado .big{font:800 24px var(--display);color:var(--navy-900)}
+.linea{display:flex;margin:22px 0 4px}
+.linea div{flex:1;text-align:center;font-size:12px;color:var(--muted);position:relative;padding-top:28px}
+.linea div:before{content:"";position:absolute;top:8px;left:0;right:0;height:3px;background:var(--line)}
+.linea div:first-child:before{left:50%}.linea div:last-child:before{right:50%}
+.linea div i{position:absolute;top:0;left:50%;transform:translateX(-50%);width:19px;height:19px;border-radius:50%;background:#fff;border:3px solid var(--line);z-index:1}
+.linea div.ok i{background:var(--ok);border-color:var(--ok)}
+.linea div.ok:before{background:var(--ok)}
+.linea div.now i{border-color:var(--blue-600);box-shadow:0 0 0 5px rgba(31,111,214,.18)}
+.linea div.now{color:var(--blue-600);font-weight:700}
+@media(max-width:560px){
+  .linea{flex-direction:column;margin-top:18px}
+  .linea div{text-align:left;font-size:14.5px;padding:0 0 14px 32px;min-height:34px}
+  .linea div:before,.linea div:first-child:before,.linea div:last-child:before{top:20px;bottom:0;left:9px;right:auto;width:3px;height:auto}
+  .linea div:last-child:before{display:none}
+  .linea div i{left:0;transform:none}
+  .linea div.ok{color:var(--navy-900)}
+}
+.cols{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+@media(max-width:780px){.cols{grid-template-columns:1fr}}
+.box{padding:22px}
+.box h3{font-size:17px}
+.chat{max-height:360px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;padding:4px}
+.chat .m{max-width:85%;padding:10px 13px;border-radius:14px;font-size:14.5px;white-space:pre-wrap}
+.chat .m small{display:block;font-size:11px;opacity:.7;margin-top:4px}
+.chat .c{align-self:flex-end;background:var(--navy);color:#fff;border-bottom-right-radius:4px}
+.chat .e{align-self:flex-start;background:var(--blue-50);color:var(--navy-900);border-bottom-left-radius:4px}
+.ev{list-style:none;padding:0;margin:0}
+.ev li{padding:10px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.ev small{color:var(--muted);display:block}
+.dl{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+</style>
+</head>
+<body class="flujo">
+<header class="top"><div class="wrap">
+  <a class="logo" href="/" aria-label="SAAT inicio"><picture><source srcset="/img/logo-saat.webp" type="image/webp"><img src="/img/logo-saat.png" alt="SAAT" width="78" height="40"></picture></a>
+  <nav><a class="lnk" href="/reclamar.html">Iniciar reclamo</a><a class="btn btn-wa btn-sm wa-link" href="https://wa.me/5493624856192?text=Hola%2C%20quiero%20consultar%20por%20un%20accidente%20de%20tr%C3%A1nsito." target="_blank" rel="noopener">WhatsApp</a></nav>
+</div></header>
+
+<main class="shell">
+  <form class="card login" id="login">
+    <p class="eyebrow">Tu reclamo</p>
+    <h1>Seguí tu caso</h1>
+    <p class="muted">Ingresá el código que te dimos al cargar el reclamo y tu DNI. Vas a ver en qué etapa está, los mensajes del estudio y tu convenio.</p>
+    <div class="field"><label for="codigo">Código del reclamo</label><input type="text" id="codigo" placeholder="SAAT-2026-123456" class="mayus" autocomplete="off" required></div>
+    <div class="field"><label for="dni">DNI</label><input type="text" id="dni" inputmode="numeric" placeholder="Sin puntos" required></div>
+    <div id="lerr" class="alert alert-bad hide"></div>
+    <button class="btn btn-primary btn-full">Ver mi caso</button>
+    <p class="login-ayuda">¿Perdiste el código? <a class="wa-link" href="https://wa.me/5493624856192?text=Hola%2C%20quiero%20consultar%20por%20un%20accidente%20de%20tr%C3%A1nsito." target="_blank" rel="noopener">Escribinos por WhatsApp</a> con tu nombre y DNI.</p>
+  </form>
+
+  <div id="vista" class="hide">
+    <div class="head">
+      <div><div class="v-codigo" id="v-codigo"></div><h1 id="v-hola"></h1></div>
+      <div class="dl"><a class="btn btn-ghost btn-sm" id="v-conv" target="_blank">Mi convenio (PDF)</a><button class="btn btn-ghost btn-sm" id="salir">Salir</button></div>
+    </div>
+    <div class="card estado">
+      <div class="estado-lbl">Estado actual</div>
+      <div class="big" id="v-estado"></div>
+      <div id="v-texto" class="muted"></div>
+      <div class="linea" id="v-linea"></div>
+    </div>
+    <div id="v-pend"></div>
+    <div class="cols">
+      <div class="card box">
+        <h3>Mensajes con el estudio</h3>
+        <div class="chat" id="chat"></div>
+        <form id="msg" class="msg-form"><label class="sr" for="msg-t">Tu mensaje</label><input type="text" id="msg-t" placeholder="Escribí tu consulta…"><button class="btn btn-primary">Enviar</button></form>
+      </div>
+      <div class="card box">
+        <h3>Novedades</h3>
+        <ul class="ev" id="eventos"></ul>
+      </div>
+    </div>
+    <div class="card box docs-box">
+      <h3>Documentación</h3>
+      <div id="docs-l" class="docs-l"></div>
+      <div class="grid2 subir">
+        <div class="field m0"><label for="up-tipo">Subir documento</label><select id="up-tipo"></select></div>
+        <div><label class="btn btn-dark btn-full m0">Elegir archivos<input type="file" id="up-f" accept="image/*,application/pdf" multiple class="sr"></label></div>
+      </div>
+      <div id="up-msg" class="hide"></div>
+    </div>
+  </div>
+</main>
+<script src="/js/tracking.js?v=20261124b" defer></script>
+<footer class="mini-pie">
+  <p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>Dr. Gerardo Martín Stancheff · Mat. 5851 S.T.J.Ch. · Monteagudo 368, Resistencia</p>
+  <p>Tus datos se usan sólo para tu reclamo (Ley 25.326) · <a href="/privacidad.html">Privacidad</a></p>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+let TOKEN = null, timer = null;
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fecha = s => new Date(String(s).replace(' ', 'T') + (String(s).length <= 19 ? 'Z' : '')).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+fetch('/api/public/config').then(r => r.json()).then(c => { document.querySelectorAll('.wa-link').forEach(a => a.href = 'https://wa.me/' + c.whatsapp); });
+
+if (location.hash.length > 3) $('#codigo').value = decodeURIComponent(location.hash.slice(1));
+try { TOKEN = sessionStorage.getItem('saat_token'); } catch (e) {}
+if (TOKEN) cargar();
+
+$('#login').onsubmit = async e => {
+  e.preventDefault();
+  const r = await fetch('/api/public/seguimiento', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ codigo: $('#codigo').value, dni: $('#dni').value }) });
+  const j = await r.json();
+  if (!r.ok) { $('#lerr').textContent = j.error; $('#lerr').classList.remove('hide'); return; }
+  TOKEN = j.token; try { sessionStorage.setItem('saat_token', TOKEN); } catch (e) {}
+  pintar(j.caso);
+};
+$('#salir').onclick = () => { try { sessionStorage.removeItem('saat_token'); } catch (e) {} location.reload(); };
+
+async function cargar() {
+  const r = await fetch('/api/public/seguimiento', { headers: { 'x-token': TOKEN } });
+  if (!r.ok) { TOKEN = null; try { sessionStorage.removeItem('saat_token'); } catch (e) {} return; }
+  pintar((await r.json()).caso);
+}
+function pintar(c) {
+  $('#login').classList.add('hide'); $('#vista').classList.remove('hide');
+  $('#v-codigo').textContent = c.codigo + (c.aseguradora ? ' · ' + c.aseguradora : '');
+  $('#v-hola').textContent = 'Hola, ' + c.nombre;
+  $('#v-estado').textContent = c.estado_label;
+  $('#v-texto').textContent = c.estado_texto;
+  $('#v-conv').href = '/api/public/seguimiento/convenio?t=' + encodeURIComponent(TOKEN);
+  const idx = c.linea.findIndex(x => x.id === c.estado);
+  $('#v-linea').innerHTML = c.linea.map((x, i) => `<div class="${idx >= 0 && i < idx ? 'ok' : ''} ${i === idx ? 'now' : ''} ${c.estado === 'cobrado' && i === idx ? 'ok' : ''}"><i></i>${esc(x.label)}</div>`).join('');
+  $('#v-linea').classList.toggle('hide', idx < 0 && c.estado !== 'doc_incompleta');
+  $('#v-pend').innerHTML = c.pendientes.length ? `<div class="alert alert-warn"><b>Documentación que nos falta:</b> ${c.pendientes.map(p => esc(p.label)).join(' · ')}. Podés subirla abajo.</div>` : '';
+  const chat = $('#chat');
+  chat.innerHTML = c.mensajes.length ? c.mensajes.map(m => `<div class="m ${m.autor === 'cliente' ? 'c' : 'e'}">${esc(m.texto)}<small>${m.autor === 'cliente' ? 'Vos' : 'Estudio SAAT'} · ${fecha(m.created_at)}</small></div>`).join('')
+    : '<p class="muted" style="font-size:14px">¿Tenés alguna duda? Escribinos acá y te respondemos.</p>';
+  chat.scrollTop = chat.scrollHeight;
+  $('#eventos').innerHTML = c.eventos.map(e => `<li>${esc(e.texto)}<small>${fecha(e.created_at)}</small></li>`).join('');
+  const cuenta = {}; c.documentos.forEach(d => cuenta[d.tipo_label] = (cuenta[d.tipo_label] || 0) + 1);
+  $('#docs-l').innerHTML = c.documentos.length ? Object.entries(cuenta).map(([l, n]) => `✓ ${esc(l)}${n > 1 ? ` (${n})` : ''}`).join('<br>') : 'Todavía no hay documentos.';
+  const sel = $('#up-tipo');
+  if (!sel.options.length) sel.innerHTML = c.tipos_doc.map(t => `<option value="${t.id}">${esc(t.label)}</option>`).join('');
+  clearInterval(timer); timer = setInterval(cargar, 30000);
+}
+$('#msg').onsubmit = async e => {
+  e.preventDefault();
+  const t = $('#msg-t').value.trim(); if (!t) return;
+  await fetch('/api/public/seguimiento/mensaje', { method: 'POST', headers: { 'Content-Type': 'application/json', 'x-token': TOKEN }, body: JSON.stringify({ texto: t }) });
+  $('#msg-t').value = ''; cargar();
+};
+$('#up-f').onchange = async e => {
+  const fd = new FormData();
+  [...e.target.files].forEach(f => fd.append($('#up-tipo').value, f, f.name));
+  const m = $('#up-msg'); m.className = 'alert alert-info'; m.textContent = 'Subiendo…';
+  const r = await fetch('/api/public/seguimiento/docs', { method: 'POST', headers: { 'x-token': TOKEN }, body: fd });
+  const j = await r.json();
+  m.className = r.ok ? 'alert alert-ok' : 'alert alert-bad';
+  m.textContent = r.ok ? `Listo, recibimos ${j.subidos} archivo(s). ¡Gracias!` : (j.error || 'No se pudo subir');
+  e.target.value = ''; cargar();
+};
+</script>
+</body>
+</html>

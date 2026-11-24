@@ -26,6 +26,17 @@ npm start           # versión real (vacía) en http://localhost:3000
 
 La primera vez que corre `npm start`, la contraseña inicial del panel se imprime en la consola y queda en `data/CREDENCIALES-INICIALES.txt`. Cambiala desde **Configuración** y borrá ese archivo.
 
+## Versión de prueba (antes de conectar el dominio)
+
+Es el mismo deploy de Railway que se explica abajo, con dos diferencias:
+
+- **No se conecta el dominio** (se saltean los pasos 5 y 6). Railway da una dirección gratis tipo `saat-plataforma-production.up.railway.app` (*Settings → Networking → Generate Domain*).
+- Se agrega la variable **`PREVIEW_PASSWORD`** con una clave. Todo el sitio pide usuario (cualquiera) y esa clave, y Google no lo indexa.
+
+Revisarla desde tu computadora: `QA_URL=https://LA-DIRECCION.up.railway.app QA_PASS=la-clave npm run qa`.
+
+**Cuando se aprueba, para pasarla a definitiva:** borrar los reclamos de prueba desde el panel, **borrar la variable `PREVIEW_PASSWORD`** y seguir con los pasos 5 y 6 (dominio y DNS). No hace falta volver a subir nada.
+
 ## Publicarlo en saat.com.ar (recomendado: Railway + Cloudflare)
 
 1. **Subir el código a GitHub** como repositorio **privado**.

@@ -25,6 +25,23 @@ app.use((req, res, next) => {
   next();
 });
 
+// Modo prueba: con PREVIEW_PASSWORD definida, todo el sitio pide usuario y clave
+// (cualquier usuario + esa clave) y Google no lo indexa. Para publicar en serio, borrar la variable.
+const PREVIEW_PASSWORD = process.env.PREVIEW_PASSWORD || '';
+if (PREVIEW_PASSWORD) {
+  const esperado = Buffer.from(PREVIEW_PASSWORD);
+  app.use((req, res, next) => {
+    res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+    const [tipo, dato] = String(req.headers.authorization || '').split(' ');
+    const clave = tipo === 'Basic' && dato ? Buffer.from(dato, 'base64').toString().split(':').slice(1).join(':') : '';
+    const dada = Buffer.from(clave);
+    if (dada.length === esperado.length && crypto.timingSafeEqual(dada, esperado)) return next();
+    res.setHeader('WWW-Authenticate', 'Basic realm="SAAT - version de prueba", charset="UTF-8"');
+    res.status(401).send('Versión de prueba de SAAT: pedí la clave al estudio.');
+  });
+  console.log('Modo prueba activo: el sitio pide clave (PREVIEW_PASSWORD).');
+}
+
 // ---------- utilidades ----------
 function secret() {
   let s = db.prepare("SELECT valor FROM config WHERE clave='_secret'").get();

@@ -4,7 +4,7 @@
 //   1) en una terminal:  npm run demo
 //   2) en otra:          npm run qa
 // La primera vez hace falta el navegador:  npx playwright install chromium
-// Otra URL:  QA_URL=https://saat.com.ar npm run qa   (en producción NO envía reclamos: usá QA_SIN_ALTA=1)
+// Otra URL:  QA_URL=https://saat.com.ar npm run qa   (fuera de localhost NO envía reclamos; para forzarlo en la versión de prueba: QA_ALTA=1)
 //
 // Deja capturas en tests/capturas/ (390 y 1440 px) y termina con código 1 si algo falla.
 const { chromium } = require('playwright');
@@ -12,7 +12,9 @@ const fs = require('fs');
 const path = require('path');
 
 const BASE = (process.env.QA_URL || 'http://localhost:3001').replace(/\/$/, '');
-const SIN_ALTA = !!process.env.QA_SIN_ALTA || !/localhost|127\.0\.0\.1/.test(BASE);
+const SIN_ALTA = !process.env.QA_ALTA && (!!process.env.QA_SIN_ALTA || !/localhost|127\.0\.0\.1/.test(BASE));
+// Versión de prueba con clave (PREVIEW_PASSWORD en el servidor): QA_PASS=la-clave npm run qa
+const CRED = process.env.QA_PASS ? { httpCredentials: { username: process.env.QA_USER || 'saat', password: process.env.QA_PASS } } : {};
 const CAP = path.join(__dirname, 'capturas');
 fs.mkdirSync(CAP, { recursive: true });
 const AXE = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -27,7 +29,7 @@ const MOVIL = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isM
 const ESCRITORIO = { viewport: { width: 1440, height: 900 } };
 
 async function nueva(b, opts = MOVIL) {
-  const ctx = await b.newContext(opts); const p = await ctx.newPage();
+  const ctx = await b.newContext({ ...opts, ...CRED }); const p = await ctx.newPage();
   p.errores = []; p.on('pageerror', e => p.errores.push(e.message));
   return p;
 }
@@ -79,7 +81,7 @@ async function tactiles(p, nombre) {
   await p.context().close();
 
   titulo('Landing · sin JS y sin la API de configuración');
-  p = await (await b.newContext({ ...MOVIL, javaScriptEnabled: false })).newPage();
+  p = await (await b.newContext({ ...MOVIL, ...CRED, javaScriptEnabled: false })).newPage();
   await p.goto(BASE + '/');
   ok(await p.locator('.band .check').isVisible() && await p.locator('#menu .seguir').isVisible(), 'sin JS: se leen los requisitos y el menú');
   ok(await p.getByText('¿Mis datos están protegidos?').isVisible(), 'sin JS: todas las preguntas visibles');

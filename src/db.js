@@ -113,7 +113,7 @@ const DEFAULT_CONFIG = {
   abogado_matricula: 'Mat. 5851 S.T.J.Ch.',
   abogado_cuit: '',
   domicilio: 'Monteagudo 368, Resistencia, Chaco',
-  email: 'drstancheff@yahoo.com.ar',
+  email: 'saatasistencia@gmail.com',
   whatsapp: '5493624856192',
   pct_cuota_litis: '20',
   honorario_estimado: '800000',

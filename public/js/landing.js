@@ -310,7 +310,7 @@
     set('f-dom', c.domicilio);
     set('f-marca', c.marca_registro);
     const m = document.getElementById('f-mail');
-    if (m && c.email) m.href = 'mailto:' + c.email;
+    if (m && c.email) { m.href = 'mailto:' + c.email; m.textContent = c.email; }
   }).catch(() => {});
 
   // Guarda el origen de la visita (publicidad) para medir canales

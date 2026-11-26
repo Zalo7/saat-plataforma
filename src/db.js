@@ -114,7 +114,7 @@ const DEFAULT_CONFIG = {
   abogado_cuit: '',
   domicilio: 'Monteagudo 368, Resistencia, Chaco',
   email: 'saatasistencia@gmail.com',
-  whatsapp: '5493624856192',
+  whatsapp: '5493625300011',
   pct_cuota_litis: '20',
   honorario_estimado: '800000',
   prescripcion_anios: '3',

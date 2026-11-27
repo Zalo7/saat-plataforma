@@ -8,6 +8,7 @@ const multer = require('multer');
 const { db, DATA_DIR, getConfig, hashPassword, checkPassword } = require('./db');
 const D = require('./dominio');
 const { generarConvenioPDF } = require('./pdf');
+const avisos = require('./avisos');
 
 const app = express();
 app.set('trust proxy', true);
@@ -189,6 +190,7 @@ app.post('/api/public/casos', limitar('alta', 20, 3600_000), upload.any(), async
     const docs = db.prepare('SELECT tipo FROM documentos WHERE caso_id = ?').all(id);
     const pend = D.docsPendientes(caso, docs);
     res.json({ ok: true, codigo: c.codigo, token: clienteToken(caso), pendientes: pend });
+    avisos.reclamoNuevo(caso, `${req.protocol}://${req.get('host')}`);
   } catch (e) {
     console.error(e); descartar();
     res.status(500).json({ error: 'No pudimos registrar el reclamo. Intentá de nuevo o escribinos por WhatsApp.' });
@@ -230,6 +232,7 @@ app.post('/api/public/seguimiento/mensaje', limitar('msg', 30, 3600_000), (req, 
   db.prepare("INSERT INTO mensajes (caso_id, autor, texto) VALUES (?, 'cliente', ?)").run(c.id, texto);
   db.prepare("UPDATE casos SET updated_at = datetime('now') WHERE id = ?").run(c.id);
   res.json({ ok: true });
+  avisos.mensajeCliente(c, texto, `${req.protocol}://${req.get('host')}`);
 });
 app.post('/api/public/seguimiento/docs', limitar('docs', 30, 3600_000), upload.any(), (req, res) => {
   const c = casoDesdeToken(req.get('x-token'));

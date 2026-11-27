@@ -37,7 +37,7 @@ npm run demo     # datos ficticios → http://localhost:3001/panel (drstancheff@
 npm start        # base real (vacía) → http://localhost:3000
 ```
 
-Variables de entorno: `DATA_DIR`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` (sólo se usan en el primer arranque), `APP_SECRET`. Si falta `APP_SECRET`, se genera uno y se guarda en la tabla `config`. La forma recomendada de publicar está en el `README.md`: Railway con el `Dockerfile` y un volumen en `/app/data`, más Cloudflare para el DNS.
+Variables de entorno: `DATA_DIR`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` (sólo se usan en el primer arranque), `APP_SECRET`. Avisos por email (`src/avisos.js`): `RESEND_API_KEY` (sin ella no se envía nada), `AVISO_EMAIL` (por defecto el email de contacto del panel) y `AVISO_DESDE` (remitente; por defecto `onboarding@resend.dev`, que sólo envía al email dueño de la cuenta de Resend). Se usa la API HTTPS de Resend porque Railway bloquea SMTP en los planes Hobby y Trial. Un aviso que falla no frena el reclamo. Si falta `APP_SECRET`, se genera uno y se guarda en la tabla `config`. La forma recomendada de publicar está en el `README.md`: Railway con el `Dockerfile` y un volumen en `/app/data`, más Cloudflare para el DNS.
 
 ## Decisiones tomadas
 
@@ -100,7 +100,8 @@ Variables de entorno: `DATA_DIR`, `PORT`, `ADMIN_EMAIL`, `ADMIN_PASSWORD` (sólo
 
 ### Mejoras técnicas sugeridas
 
-- [ ] Avisos automáticos al cliente y al estudio (email o WhatsApp Business API) cuando cambia el estado o llega un mensaje. Hoy no se envía ninguna notificación.
+- [x] Aviso por email al estudio con cada reclamo nuevo y cada mensaje de un cliente (`src/avisos.js`, vía Resend; 27/11/2026).
+- [ ] Avisos al cliente (email o WhatsApp Business API) cuando cambia el estado de su caso.
 - [ ] Generar el reclamo extrajudicial (.docx) desde la ficha del caso, reutilizando el modelo de reclamos del estudio (fórmula Vuotto/García, baremo Altube/Rinaldi).
 - [ ] Portal de derivación para talleres y clínicas, con un canal propio para medirlo.
 - [x] Tests automatizados del flujo con Playwright (`npm run qa`, 24/11/2026).

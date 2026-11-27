@@ -37,6 +37,16 @@ Revisarla desde tu computadora: `QA_URL=https://LA-DIRECCION.up.railway.app QA_P
 
 **Cuando se aprueba, para pasarla a definitiva:** borrar los reclamos de prueba desde el panel, **borrar la variable `PREVIEW_PASSWORD`** y seguir con los pasos 5 y 6 (dominio y DNS). No hace falta volver a subir nada.
 
+## Avisos por email al estudio
+
+Con cada reclamo nuevo y cada mensaje de un cliente llega un email con los datos básicos y un botón para abrir el caso en el panel. Se envía con [Resend](https://resend.com) (gratis hasta 3.000 emails por mes). Railway no permite enviar por Gmail/SMTP en los planes baratos.
+
+1. Crear una cuenta en resend.com **con el email que tiene que recibir los avisos** (saatasistencia@gmail.com).
+2. En Resend: *API Keys → Create API Key* (permiso *Sending access*) y copiar la clave (empieza con `re_`).
+3. En Railway, en *Variables*, agregar `RESEND_API_KEY` con esa clave. Railway vuelve a desplegar solo.
+
+Mientras no haya dominio verificado en Resend, los avisos salen desde `onboarding@resend.dev` y **sólo pueden llegar al email con el que se creó la cuenta de Resend**. Para mandarlos a otra dirección o que salgan desde `avisos@saat.com.ar`: verificar `saat.com.ar` en Resend (*Domains*, se agregan unos registros DNS en Cloudflare) y cargar las variables `AVISO_EMAIL` y `AVISO_DESDE` (ej.: `SAAT <avisos@saat.com.ar>`). Si algo falla, el reclamo igual se guarda y el error queda en los logs de Railway (buscar `[aviso]`).
+
 ## Publicarlo en saat.com.ar (recomendado: Railway + Cloudflare)
 
 1. **Subir el código a GitHub** como repositorio **privado**.
